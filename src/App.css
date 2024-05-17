@@ -1,84 +1,33 @@
-/* App container styles */
-#root {
-  max-width: 1200px;
-  max-height: 800px;
-  margin: 0 auto;
-  padding: 2rem;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #f0f2f5;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.8em;
+  margin-top: 30px;
+  color: #666;
   text-align: center;
 }
 
-/* Todo form styles */
-form {
-  margin-bottom: 1rem;
-}
-
-input[type="text"] {
-  width: 50%;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-button {
-  padding: 0.5rem 1rem;
-  margin-left: 0.5rem;
-  cursor: pointer;
-}
-
 .todo-list {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 20px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.todo-item {
-  width: calc(
-    25% - 1rem
-  ); /* Each todo item takes up 25% of the container width with margins */
-  margin: 0.5rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-.completed {
-  background-color: #e6ffe6;
-}
-
-/* Todo list header styles */
-h2 {
-  margin-bottom: 0.5rem;
-}
-
-/* Button styles */
-button {
-  padding: 0.5rem 1rem;
-  margin-left: 0.5rem;
-  cursor: pointer;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Button for pending todos */
-.pending-button {
-  background-color: #ffc107;
-}
-
-.pending-button:hover {
-  background-color: #d39e00;
-}
-
-/* Button for deleting todos */
-.delete-button {
-  background-color: #dc3545;
-}
-
-.delete-button:hover {
-  background-color: #bd2130;
+  flex-direction: column;
+  align-items: center;
 }

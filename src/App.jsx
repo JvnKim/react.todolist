@@ -1,9 +1,10 @@
 import { useState } from "react";
+import TodoItem from "./TodoItem";
+import TodoForm from "./TodoForm";
 import "./App.css";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
-  const [completed, setCompleted] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -19,71 +20,64 @@ const App = () => {
     setDescription("");
   };
 
-  const removeTodo = (id, list) => {
-    if (list === "todos") setTodos(todos.filter((todo) => todo.id !== id));
-    else if (list === "completed")
-      setCompleted(completed.filter((todo) => todo.id !== id));
-  };
-
-  const completeTodo = (id) => {
-    const todo = todos.find((todo) => todo.id === id);
-    setCompleted([...completed, { ...todo, completed: true }]);
+  const removeTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
+  const completeTodo = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: true } : todo
+      )
+    );
+  };
+
   const pendingTodo = (id) => {
-    const todo = completed.find((todo) => todo.id === id);
-    setTodos([...todos, { ...todo, completed: false }]);
-    setCompleted(completed.filter((todo) => todo.id !== id));
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: false } : todo
+      )
+    );
   };
 
   return (
     <>
       <h1>Todo List</h1>
-      <form onSubmit={addTodo}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <br />
-        <button type="submit">Add Todo</button>
-      </form>
+      <TodoForm
+        title={title}
+        setTitle={setTitle}
+        description={description}
+        setDescription={setDescription}
+        addTodo={addTodo}
+      />
       <div>
         <h2>Pending Todos</h2>
         <div className="todo-list">
-          {todos.map((todo) => (
-            <div key={todo.id} className="todo-item">
-              <h2>{todo.title}</h2>
-              <p>{todo.description}</p>
-              <button onClick={() => completeTodo(todo.id)}>Complete</button>
-              <button onClick={() => removeTodo(todo.id, "todos")}>
-                Delete
-              </button>
-            </div>
-          ))}
+          {todos
+            .filter((todo) => !todo.completed)
+            .map((todo) => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                onComplete={completeTodo}
+                onRemove={removeTodo}
+              />
+            ))}
         </div>
       </div>
       <div>
         <h2>Completed Todos</h2>
         <div className="todo-list">
-          {completed.map((todo) => (
-            <div key={todo.id} className="todo-item">
-              <h2>{todo.title}</h2>
-              <p>{todo.description}</p>
-              <button onClick={() => pendingTodo(todo.id)}>Pending</button>
-              <button onClick={() => removeTodo(todo.id, "completed")}>
-                Delete
-              </button>
-            </div>
-          ))}
+          {todos
+            .filter((todo) => todo.completed)
+            .map((todo) => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                onPending={pendingTodo}
+                onRemove={removeTodo}
+              />
+            ))}
         </div>
       </div>
     </>
